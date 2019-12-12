@@ -60,7 +60,7 @@ async def useCase(*destinationCodes: LocationCode) -> Sequence[Event]:
     navigator = \
         Navigator() \
             .byLand(factory, port, hours(1)) \
-                .bySea(port, warehouseA, hours(4)) \
+                .bySea(port, warehouseA, hours(6)) \
             .byLand(factory, warehouseB, hours(5))
 
     await Truck(simulator, 'Truck 1', navigator) \

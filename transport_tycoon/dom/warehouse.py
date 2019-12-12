@@ -1,5 +1,5 @@
 from asyncio.locks import Event as Waiter
-from typing import List, NamedTuple as Object
+from typing import List, NamedTuple as Object, Optional
 
 from transport_tycoon.common.simulator import Simulator, SimulationObject
 
@@ -22,18 +22,19 @@ class Warehouse(SimulationObject):
         self.__queue: List[Cargo] = []
         self.__waiters: List[Waiter] = []
 
-    def __pickNoWait(self) -> Cargo:
-        return self.__queue.pop(0)
-
-    async def pickCargo(self) -> Cargo:
-        if self.empty():
+    async def waitForACargo(self):
+        if self.isEmpty():
             self._sim.suspendProcess()
 
             waiter = Waiter()
             self.__waiters.append(waiter)
             await waiter.wait()
 
-        return self.__pickNoWait()
+    def pickCargo(self) -> Optional[Cargo]:
+        if self.isEmpty():
+            return None
+
+        return self.__queue.pop(0)
 
     def bring(self, aCargo: Cargo):
         self.__queue.append(aCargo)
@@ -43,7 +44,7 @@ class Warehouse(SimulationObject):
             waiter.set()
             self._sim.resumeProcess()
 
-    def empty(self) -> bool:
+    def isEmpty(self) -> bool:
         return not self.__queue
 
     def fullness(self) -> int:

@@ -13,13 +13,13 @@ def eventToDict(event: Event, startAt: Time):
         'transport_id': event.source.name,
         'kind': event.source.__class__.__name__.upper(),
     }
-    if event.cargo:
+    if event.cargoes:
         rv.update({
             'cargo': [{
-                'cargo_id': event.cargo.id,
-                'origin': event.cargo.originCode,
-                'destination': event.cargo.destinationCode,
-            }]
+                'cargo_id': cargo.id,
+                'origin': cargo.originCode,
+                'destination': cargo.destinationCode,
+            } for cargo in event.cargoes]
         })
     if isinstance(event, TransportArrived):
         rv.update({
