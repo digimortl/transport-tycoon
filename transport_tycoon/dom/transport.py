@@ -35,6 +35,10 @@ class Transport(SimulationObject):
         self.__nav = nav
         self.__shipmentOption = shipmentOption
 
+    @property
+    def name(self) -> str:
+        return self.__name
+
     def load(self, aCargo: Cargo):
         self.__cargo = aCargo
 

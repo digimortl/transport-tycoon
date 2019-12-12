@@ -35,22 +35,25 @@ def forEach(func, iterable):
 
 
 async def useCase(*destinationCodes: LocationCode) -> Sequence[Event]:
+    FACTORY = 'Factory'
+    PORT = 'Port'
     A, B = 'A', 'B'
 
     checkIfLocationCodesValid([A, B], destinationCodes)
 
-    cargoFromFactoryTo = partial(Cargo, 'Factory')
+    def cargoFromFactoryTo(pair) -> Cargo:
+        return Cargo(pair[0], FACTORY, pair[1])
 
-    cargoesToDeliver = list(map(cargoFromFactoryTo, destinationCodes))
+    cargoesToDeliver = list(map(cargoFromFactoryTo, enumerate(destinationCodes)))
 
     startAt = Time.today().replace(hour=0, minute=0, second=0, microsecond=0)
     LOG.debug('Start simulation at %s', startAt.time())
 
     simulator = Simulator(startAt, ensure_future)
 
-    factory = Warehouse(simulator, 'Factory')
+    factory = Warehouse(simulator, FACTORY)
     forEach(factory.bring, cargoesToDeliver)
-    port = Warehouse(simulator, 'Port')
+    port = Warehouse(simulator, PORT)
     warehouseA = Warehouse(simulator, A)
     warehouseB = Warehouse(simulator, B)
 
@@ -77,15 +80,11 @@ async def useCase(*destinationCodes: LocationCode) -> Sequence[Event]:
 
 
 if __name__ == '__main__':
-    import pprint
     import sys
+    from transport_tycoon.event_adapter import printEvents
 
     dictConfig(config.LOGGING_CONFIG)
 
     occurredEvents: Sequence[Event] = \
         run(useCase(*inputLocationCodes()), debug=True)
-    pprint.pprint(occurredEvents)
-
-    if occurredEvents:
-        timeToDeliver = occurredEvents[-1].occurredAt - occurredEvents[0].occurredAt
-        print(timeToDeliver.total_seconds() / 3600.0, file=sys.stdout)
+    printEvents(occurredEvents)

@@ -8,6 +8,7 @@ LocationCode = str
 
 
 class Cargo(Object):
+    id: int
     originCode: LocationCode
     destinationCode: LocationCode
 
