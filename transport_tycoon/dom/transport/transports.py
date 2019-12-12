@@ -16,7 +16,8 @@ LOG = getLogger(__name__)
 
 class Transport(SimulationObject):
     capacity: int = 1
-    departAfter: Duration = hours(0)
+    timeToLoad: Duration = hours(0)
+    timeToUnload: Duration = hours(0)
 
     def __init__(self,
                  sim: Simulator,
@@ -38,17 +39,17 @@ class Transport(SimulationObject):
     def load(self, aCargo: Cargo):
         self.__cargoes.append(aCargo)
 
-    def unloadACargo(self) -> Cargo:
+    def unload(self) -> Cargo:
         return self.__cargoes.pop()
 
     def assignItinerary(self, from_: LocationCode, to: LocationCode):
         itinerary = self.__transportMap.findItinerary(from_, to)
         self.__assignedItinerary = itinerary.forShipBy(self.__shipmentOption)
-        LOG.debug('%r assigned itinerary %r', self, self.__assignedItinerary)
+        LOG.debug('[%r] assigned itinerary %r', self, self.__assignedItinerary)
 
     def reAssignItineraryToComeBack(self):
         self.__assignedItinerary = self.__assignedItinerary.forComeBack()
-        LOG.debug('%r (re)assigned itinerary %r', self, self.__assignedItinerary)
+        LOG.debug('[%r] (re)assigned itinerary %r', self, self.__assignedItinerary)
 
     def isEmpty(self) -> bool:
         return not self.__cargoes
@@ -65,27 +66,11 @@ class Transport(SimulationObject):
                                               toWarehouse=self.__assignedItinerary.destination,
                                               timeToDeliver=self.__assignedItinerary.totalTimeToTravel,
                                               cargoes=tuple(self.__cargoes))
-        await self._sim.schedule(transportDeparted, after=self.departAfter)
+        await self._sim.schedule(transportDeparted)
 
     async def comeBack(self):
         self.reAssignItineraryToComeBack()
         await self.depart()
-
-    @overload
-    async def when(self, arrived: TransportArrived):
-        ...
-
-    @overload
-    async def when(self, departed: TransportDeparted):
-        ...
-
-    async def when(self, event):
-        if isinstance(event, TransportArrived):
-            await self.whenArrived(event)
-        elif isinstance(event, TransportDeparted):
-            await self.whenDeparted(event)
-        else:
-            raise NotImplementedError
 
     async def loadCargoesFrom(self, warehouse: Warehouse):
         while not self.isFull():
@@ -97,23 +82,62 @@ class Transport(SimulationObject):
             else:
                 break
 
-    def unloadCargoesTo(self, warehouse: Warehouse):
+        cargoesLoaded = CargoesLoaded(self,
+                                      fromWarehouse=warehouse,
+                                      duration=self.timeToLoad,
+                                      cargoes=tuple(self.__cargoes))
+        await self._sim.schedule(cargoesLoaded, after=self.timeToLoad)
+
+    async def unloadCargoesTo(self, warehouse: Warehouse):
         while not self.isEmpty():
-            aCargo = self.unloadACargo()
+            aCargo = self.unload()
             warehouse.bring(aCargo)
 
-    async def whenArrived(self, arrived: TransportArrived):
-        warehouse = arrived.atWarehouse
+        cargoesUnloaded = CargoesUnloaded(self,
+                                          toWarehouse=warehouse,
+                                          duration=self.timeToUnload,
+                                          cargoes=tuple(self.__cargoes))
+        await self._sim.schedule(cargoesUnloaded, after=self.timeToUnload)
 
-        if self.isEmpty():
-            await self.loadCargoesFrom(warehouse)
+    def __repr__(self):
+        return f'{type(self).__name__}({self.__name})'
 
-            self.assignItinerary(from_=warehouse.locationCode,
-                                 to=self.__cargoes[0].destinationCode)
-            await self.depart()
+    #
+    # Event handlers:
+    #
+    @overload
+    async def when(self, arrived: TransportArrived):
+        ...
+
+    @overload
+    async def when(self, departed: TransportDeparted):
+        ...
+
+    @overload
+    async def when(self, loaded: CargoesLoaded):
+        ...
+
+    @overload
+    async def when(self, unloaded: CargoesUnloaded):
+        ...
+
+    async def when(self, event):
+        if isinstance(event, TransportArrived):
+            await self.whenArrived(event)
+        elif isinstance(event, TransportDeparted):
+            await self.whenDeparted(event)
+        elif isinstance(event, CargoesLoaded):
+            await self.whenLoaded(event)
+        elif isinstance(event, CargoesUnloaded):
+            await self.whenUnloaded(event)
         else:
-            self.unloadCargoesTo(warehouse)
-            await self.comeBack()
+            raise NotImplementedError
+
+    async def whenArrived(self, arrived: TransportArrived):
+        if self.isEmpty():
+            await self.loadCargoesFrom(arrived.atWarehouse)
+        else:
+            await self.unloadCargoesTo(arrived.atWarehouse)
 
     async def whenDeparted(self, departed: TransportDeparted):
         transportArrived = TransportArrived(self,
@@ -121,8 +145,13 @@ class Transport(SimulationObject):
                                             cargoes=tuple(self.__cargoes))
         await self._sim.schedule(transportArrived, after=departed.timeToDeliver)
 
-    def __repr__(self):
-        return f'{type(self).__name__}({self.__name})'
+    async def whenLoaded(self, loaded: CargoesLoaded):
+        self.assignItinerary(from_=loaded.fromWarehouse.locationCode,
+                             to=loaded.cargoes[0].destinationCode)
+        await self.depart()
+
+    async def whenUnloaded(self, unloaded: CargoesUnloaded):
+        await self.comeBack()
 
 
 class Truck(Transport):
@@ -132,7 +161,8 @@ class Truck(Transport):
 
 class Vessel(Transport):
     capacity: int = 4
-    departAfter: Duration = hours(1)
+    timeToLoad: Duration = hours(1)
+    timeToUnload: Duration = hours(1)
 
     def __init__(self, sim: Simulator, name: str, transportMap: TransportMap):
         super().__init__(sim, name, transportMap, ShipmentOption.sea)

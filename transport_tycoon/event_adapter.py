@@ -3,24 +3,28 @@ from sys import stdout
 from typing import Sequence
 
 from transport_tycoon.common.simulator import Event
-from transport_tycoon.common.util import Time
-from transport_tycoon.dom.transport import TransportArrived, TransportDeparted
+from transport_tycoon.common.util import Duration, Time
+from transport_tycoon.dom.transport import *
 
 
 def eventToDict(event: Event, startAt: Time):
+
+    def inHours(dur: Duration) -> float:
+        return dur.total_seconds() / 3600.0
+
+    def relTime() -> Duration:
+        return event.occurredAt - startAt
+
     rv = {
-        'time': (event.occurredAt - startAt).total_seconds() / 3600,
+        'time': inHours(relTime()),
         'transport_id': event.source.name,
         'kind': event.source.__class__.__name__.upper(),
+        'cargo': [{
+            'cargo_id': cargo.trackNumber,
+            'origin': cargo.originCode,
+            'destination': cargo.destinationCode,
+        } for cargo in event.cargoes]
     }
-    if event.cargoes:
-        rv.update({
-            'cargo': [{
-                'cargo_id': cargo.trackNumber,
-                'origin': cargo.originCode,
-                'destination': cargo.destinationCode,
-            } for cargo in event.cargoes]
-        })
     if isinstance(event, TransportArrived):
         rv.update({
             'event': 'ARRIVE',
@@ -31,6 +35,18 @@ def eventToDict(event: Event, startAt: Time):
             'event': 'DEPART',
             'location': event.fromWarehouse.locationCode,
             'destination': event.toWarehouse.locationCode,
+        })
+    elif isinstance(event, CargoesLoaded):
+        rv.update({
+            'time': inHours(relTime() - event.duration),
+            'event': 'LOAD',
+            'duration': inHours(event.duration),
+        })
+    elif isinstance(event, CargoesUnloaded):
+        rv.update({
+            'time': inHours(relTime() - event.duration),
+            'event': 'UNLOAD',
+            'duration': inHours(event.duration),
         })
     else:
         raise NotImplementedError
