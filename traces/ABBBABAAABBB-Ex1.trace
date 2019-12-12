@@ -1,0 +1,854 @@
+{
+   "traceEvents" : [
+      {
+         "ph" : "E",
+         "tid" : "TRUCK:Truck 1",
+         "args" : {
+            "cargo" : [],
+            "transport" : "TRUCK:Truck 1"
+         },
+         "ts" : 0,
+         "pid" : "TRUCK:Truck 1",
+         "cat" : "ddd"
+      },
+      {
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 2",
+         "ts" : 0,
+         "args" : {
+            "cargo" : [],
+            "transport" : "TRUCK:Truck 2"
+         },
+         "tid" : "TRUCK:Truck 2",
+         "ph" : "E"
+      },
+      {
+         "ph" : "E",
+         "tid" : "VESSEL:Vessel 1",
+         "cat" : "ddd",
+         "pid" : "VESSEL:Vessel 1",
+         "ts" : 0,
+         "args" : {
+            "transport" : "VESSEL:Vessel 1",
+            "cargo" : []
+         }
+      },
+      {
+         "ts" : 0,
+         "name" : "Factory-Port",
+         "pid" : "TRUCK:Truck 1",
+         "cat" : "ddd",
+         "args" : {
+            "transport" : "TRUCK:Truck 1",
+            "cargo" : [
+               "CARGO:Factory_A_0"
+            ]
+         },
+         "tid" : "TRUCK:Truck 1",
+         "ph" : "B"
+      },
+      {
+         "ph" : "B",
+         "tid" : "TRUCK:Truck 2",
+         "ts" : 0,
+         "name" : "Factory-B",
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 2",
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_B_1"
+            ],
+            "transport" : "TRUCK:Truck 2"
+         }
+      },
+      {
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_A_0"
+            ],
+            "transport" : "TRUCK:Truck 1"
+         },
+         "pid" : "TRUCK:Truck 1",
+         "cat" : "ddd",
+         "ts" : 1,
+         "tid" : "TRUCK:Truck 1",
+         "ph" : "E"
+      },
+      {
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 1",
+         "name" : "Port-Factory",
+         "ts" : 1,
+         "args" : {
+            "transport" : "TRUCK:Truck 1",
+            "cargo" : []
+         },
+         "tid" : "TRUCK:Truck 1",
+         "ph" : "B"
+      },
+      {
+         "cat" : "ddd",
+         "pid" : "VESSEL:Vessel 1",
+         "name" : "Port-A",
+         "ts" : 1,
+         "args" : {
+            "transport" : "VESSEL:Vessel 1",
+            "cargo" : [
+               "CARGO:Factory_A_0"
+            ]
+         },
+         "tid" : "VESSEL:Vessel 1",
+         "ph" : "B"
+      },
+      {
+         "tid" : "TRUCK:Truck 1",
+         "ph" : "E",
+         "ts" : 2,
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 1",
+         "args" : {
+            "transport" : "TRUCK:Truck 1",
+            "cargo" : []
+         }
+      },
+      {
+         "tid" : "TRUCK:Truck 1",
+         "ph" : "B",
+         "args" : {
+            "transport" : "TRUCK:Truck 1",
+            "cargo" : [
+               "CARGO:Factory_B_2"
+            ]
+         },
+         "name" : "Factory-B",
+         "ts" : 2,
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 1"
+      },
+      {
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_B_1"
+            ],
+            "transport" : "TRUCK:Truck 2"
+         },
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 2",
+         "ts" : 5,
+         "ph" : "E",
+         "tid" : "TRUCK:Truck 2"
+      },
+      {
+         "ts" : 5,
+         "cat" : "ddd",
+         "pid" : "VESSEL:Vessel 1",
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_A_0"
+            ],
+            "transport" : "VESSEL:Vessel 1"
+         },
+         "ph" : "E",
+         "tid" : "VESSEL:Vessel 1"
+      },
+      {
+         "args" : {
+            "transport" : "TRUCK:Truck 2",
+            "cargo" : []
+         },
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 2",
+         "ts" : 5,
+         "name" : "B-Factory",
+         "ph" : "B",
+         "tid" : "TRUCK:Truck 2"
+      },
+      {
+         "ph" : "B",
+         "tid" : "VESSEL:Vessel 1",
+         "args" : {
+            "transport" : "VESSEL:Vessel 1",
+            "cargo" : []
+         },
+         "cat" : "ddd",
+         "pid" : "VESSEL:Vessel 1",
+         "ts" : 5,
+         "name" : "A-Port"
+      },
+      {
+         "pid" : "TRUCK:Truck 1",
+         "cat" : "ddd",
+         "ts" : 7,
+         "args" : {
+            "transport" : "TRUCK:Truck 1",
+            "cargo" : [
+               "CARGO:Factory_B_2"
+            ]
+         },
+         "ph" : "E",
+         "tid" : "TRUCK:Truck 1"
+      },
+      {
+         "ts" : 7,
+         "name" : "B-Factory",
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 1",
+         "args" : {
+            "cargo" : [],
+            "transport" : "TRUCK:Truck 1"
+         },
+         "tid" : "TRUCK:Truck 1",
+         "ph" : "B"
+      },
+      {
+         "tid" : "VESSEL:Vessel 1",
+         "ph" : "E",
+         "args" : {
+            "cargo" : [],
+            "transport" : "VESSEL:Vessel 1"
+         },
+         "cat" : "ddd",
+         "pid" : "VESSEL:Vessel 1",
+         "ts" : 9
+      },
+      {
+         "pid" : "TRUCK:Truck 2",
+         "cat" : "ddd",
+         "ts" : 10,
+         "args" : {
+            "cargo" : [],
+            "transport" : "TRUCK:Truck 2"
+         },
+         "ph" : "E",
+         "tid" : "TRUCK:Truck 2"
+      },
+      {
+         "args" : {
+            "transport" : "TRUCK:Truck 2",
+            "cargo" : [
+               "CARGO:Factory_B_3"
+            ]
+         },
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 2",
+         "ts" : 10,
+         "name" : "Factory-B",
+         "ph" : "B",
+         "tid" : "TRUCK:Truck 2"
+      },
+      {
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 1",
+         "ts" : 12,
+         "args" : {
+            "transport" : "TRUCK:Truck 1",
+            "cargo" : []
+         },
+         "tid" : "TRUCK:Truck 1",
+         "ph" : "E"
+      },
+      {
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_A_4"
+            ],
+            "transport" : "TRUCK:Truck 1"
+         },
+         "ts" : 12,
+         "name" : "Factory-Port",
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 1",
+         "tid" : "TRUCK:Truck 1",
+         "ph" : "B"
+      },
+      {
+         "args" : {
+            "transport" : "TRUCK:Truck 1",
+            "cargo" : [
+               "CARGO:Factory_A_4"
+            ]
+         },
+         "ts" : 13,
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 1",
+         "tid" : "TRUCK:Truck 1",
+         "ph" : "E"
+      },
+      {
+         "args" : {
+            "transport" : "TRUCK:Truck 1",
+            "cargo" : []
+         },
+         "pid" : "TRUCK:Truck 1",
+         "cat" : "ddd",
+         "name" : "Port-Factory",
+         "ts" : 13,
+         "ph" : "B",
+         "tid" : "TRUCK:Truck 1"
+      },
+      {
+         "ph" : "B",
+         "tid" : "VESSEL:Vessel 1",
+         "name" : "Port-A",
+         "ts" : 13,
+         "cat" : "ddd",
+         "pid" : "VESSEL:Vessel 1",
+         "args" : {
+            "transport" : "VESSEL:Vessel 1",
+            "cargo" : [
+               "CARGO:Factory_A_4"
+            ]
+         }
+      },
+      {
+         "ph" : "E",
+         "tid" : "TRUCK:Truck 1",
+         "args" : {
+            "cargo" : [],
+            "transport" : "TRUCK:Truck 1"
+         },
+         "ts" : 14,
+         "pid" : "TRUCK:Truck 1",
+         "cat" : "ddd"
+      },
+      {
+         "ph" : "B",
+         "tid" : "TRUCK:Truck 1",
+         "args" : {
+            "transport" : "TRUCK:Truck 1",
+            "cargo" : [
+               "CARGO:Factory_B_5"
+            ]
+         },
+         "pid" : "TRUCK:Truck 1",
+         "cat" : "ddd",
+         "ts" : 14,
+         "name" : "Factory-B"
+      },
+      {
+         "ts" : 15,
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 2",
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_B_3"
+            ],
+            "transport" : "TRUCK:Truck 2"
+         },
+         "ph" : "E",
+         "tid" : "TRUCK:Truck 2"
+      },
+      {
+         "ph" : "B",
+         "tid" : "TRUCK:Truck 2",
+         "args" : {
+            "cargo" : [],
+            "transport" : "TRUCK:Truck 2"
+         },
+         "name" : "B-Factory",
+         "ts" : 15,
+         "pid" : "TRUCK:Truck 2",
+         "cat" : "ddd"
+      },
+      {
+         "pid" : "VESSEL:Vessel 1",
+         "cat" : "ddd",
+         "ts" : 17,
+         "args" : {
+            "transport" : "VESSEL:Vessel 1",
+            "cargo" : [
+               "CARGO:Factory_A_4"
+            ]
+         },
+         "tid" : "VESSEL:Vessel 1",
+         "ph" : "E"
+      },
+      {
+         "ph" : "B",
+         "tid" : "VESSEL:Vessel 1",
+         "name" : "A-Port",
+         "ts" : 17,
+         "pid" : "VESSEL:Vessel 1",
+         "cat" : "ddd",
+         "args" : {
+            "transport" : "VESSEL:Vessel 1",
+            "cargo" : []
+         }
+      },
+      {
+         "tid" : "TRUCK:Truck 1",
+         "ph" : "E",
+         "ts" : 19,
+         "pid" : "TRUCK:Truck 1",
+         "cat" : "ddd",
+         "args" : {
+            "transport" : "TRUCK:Truck 1",
+            "cargo" : [
+               "CARGO:Factory_B_5"
+            ]
+         }
+      },
+      {
+         "args" : {
+            "transport" : "TRUCK:Truck 1",
+            "cargo" : []
+         },
+         "pid" : "TRUCK:Truck 1",
+         "cat" : "ddd",
+         "ts" : 19,
+         "name" : "B-Factory",
+         "ph" : "B",
+         "tid" : "TRUCK:Truck 1"
+      },
+      {
+         "args" : {
+            "cargo" : [],
+            "transport" : "TRUCK:Truck 2"
+         },
+         "ts" : 20,
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 2",
+         "ph" : "E",
+         "tid" : "TRUCK:Truck 2"
+      },
+      {
+         "pid" : "TRUCK:Truck 2",
+         "cat" : "ddd",
+         "name" : "Factory-Port",
+         "ts" : 20,
+         "args" : {
+            "transport" : "TRUCK:Truck 2",
+            "cargo" : [
+               "CARGO:Factory_A_6"
+            ]
+         },
+         "ph" : "B",
+         "tid" : "TRUCK:Truck 2"
+      },
+      {
+         "ph" : "E",
+         "tid" : "VESSEL:Vessel 1",
+         "args" : {
+            "cargo" : [],
+            "transport" : "VESSEL:Vessel 1"
+         },
+         "pid" : "VESSEL:Vessel 1",
+         "cat" : "ddd",
+         "ts" : 21
+      },
+      {
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_A_6"
+            ],
+            "transport" : "TRUCK:Truck 2"
+         },
+         "ts" : 21,
+         "pid" : "TRUCK:Truck 2",
+         "cat" : "ddd",
+         "ph" : "E",
+         "tid" : "TRUCK:Truck 2"
+      },
+      {
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 2",
+         "name" : "Port-Factory",
+         "ts" : 21,
+         "args" : {
+            "cargo" : [],
+            "transport" : "TRUCK:Truck 2"
+         },
+         "ph" : "B",
+         "tid" : "TRUCK:Truck 2"
+      },
+      {
+         "cat" : "ddd",
+         "pid" : "VESSEL:Vessel 1",
+         "name" : "Port-A",
+         "ts" : 21,
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_A_6"
+            ],
+            "transport" : "VESSEL:Vessel 1"
+         },
+         "ph" : "B",
+         "tid" : "VESSEL:Vessel 1"
+      },
+      {
+         "args" : {
+            "cargo" : [],
+            "transport" : "TRUCK:Truck 2"
+         },
+         "ts" : 22,
+         "pid" : "TRUCK:Truck 2",
+         "cat" : "ddd",
+         "ph" : "E",
+         "tid" : "TRUCK:Truck 2"
+      },
+      {
+         "tid" : "TRUCK:Truck 2",
+         "ph" : "B",
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_A_7"
+            ],
+            "transport" : "TRUCK:Truck 2"
+         },
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 2",
+         "ts" : 22,
+         "name" : "Factory-Port"
+      },
+      {
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_A_7"
+            ],
+            "transport" : "TRUCK:Truck 2"
+         },
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 2",
+         "ts" : 23,
+         "ph" : "E",
+         "tid" : "TRUCK:Truck 2"
+      },
+      {
+         "args" : {
+            "transport" : "TRUCK:Truck 2",
+            "cargo" : []
+         },
+         "name" : "Port-Factory",
+         "ts" : 23,
+         "pid" : "TRUCK:Truck 2",
+         "cat" : "ddd",
+         "tid" : "TRUCK:Truck 2",
+         "ph" : "B"
+      },
+      {
+         "args" : {
+            "transport" : "TRUCK:Truck 1",
+            "cargo" : []
+         },
+         "pid" : "TRUCK:Truck 1",
+         "cat" : "ddd",
+         "ts" : 24,
+         "tid" : "TRUCK:Truck 1",
+         "ph" : "E"
+      },
+      {
+         "args" : {
+            "transport" : "TRUCK:Truck 2",
+            "cargo" : []
+         },
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 2",
+         "ts" : 24,
+         "ph" : "E",
+         "tid" : "TRUCK:Truck 2"
+      },
+      {
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_A_8"
+            ],
+            "transport" : "TRUCK:Truck 1"
+         },
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 1",
+         "name" : "Factory-Port",
+         "ts" : 24,
+         "tid" : "TRUCK:Truck 1",
+         "ph" : "B"
+      },
+      {
+         "ph" : "B",
+         "tid" : "TRUCK:Truck 2",
+         "pid" : "TRUCK:Truck 2",
+         "cat" : "ddd",
+         "ts" : 24,
+         "name" : "Factory-B",
+         "args" : {
+            "transport" : "TRUCK:Truck 2",
+            "cargo" : [
+               "CARGO:Factory_B_9"
+            ]
+         }
+      },
+      {
+         "ph" : "E",
+         "tid" : "VESSEL:Vessel 1",
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_A_6"
+            ],
+            "transport" : "VESSEL:Vessel 1"
+         },
+         "ts" : 25,
+         "pid" : "VESSEL:Vessel 1",
+         "cat" : "ddd"
+      },
+      {
+         "ts" : 25,
+         "pid" : "TRUCK:Truck 1",
+         "cat" : "ddd",
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_A_8"
+            ],
+            "transport" : "TRUCK:Truck 1"
+         },
+         "tid" : "TRUCK:Truck 1",
+         "ph" : "E"
+      },
+      {
+         "name" : "A-Port",
+         "ts" : 25,
+         "cat" : "ddd",
+         "pid" : "VESSEL:Vessel 1",
+         "args" : {
+            "cargo" : [],
+            "transport" : "VESSEL:Vessel 1"
+         },
+         "ph" : "B",
+         "tid" : "VESSEL:Vessel 1"
+      },
+      {
+         "ph" : "B",
+         "tid" : "TRUCK:Truck 1",
+         "ts" : 25,
+         "name" : "Port-Factory",
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 1",
+         "args" : {
+            "transport" : "TRUCK:Truck 1",
+            "cargo" : []
+         }
+      },
+      {
+         "tid" : "TRUCK:Truck 1",
+         "ph" : "E",
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 1",
+         "ts" : 26,
+         "args" : {
+            "cargo" : [],
+            "transport" : "TRUCK:Truck 1"
+         }
+      },
+      {
+         "tid" : "TRUCK:Truck 1",
+         "ph" : "B",
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_B_10"
+            ],
+            "transport" : "TRUCK:Truck 1"
+         },
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 1",
+         "name" : "Factory-B",
+         "ts" : 26
+      },
+      {
+         "ts" : 29,
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 2",
+         "args" : {
+            "transport" : "TRUCK:Truck 2",
+            "cargo" : [
+               "CARGO:Factory_B_9"
+            ]
+         },
+         "tid" : "TRUCK:Truck 2",
+         "ph" : "E"
+      },
+      {
+         "ph" : "E",
+         "tid" : "VESSEL:Vessel 1",
+         "args" : {
+            "cargo" : [],
+            "transport" : "VESSEL:Vessel 1"
+         },
+         "ts" : 29,
+         "cat" : "ddd",
+         "pid" : "VESSEL:Vessel 1"
+      },
+      {
+         "tid" : "TRUCK:Truck 2",
+         "ph" : "B",
+         "args" : {
+            "cargo" : [],
+            "transport" : "TRUCK:Truck 2"
+         },
+         "ts" : 29,
+         "name" : "B-Factory",
+         "pid" : "TRUCK:Truck 2",
+         "cat" : "ddd"
+      },
+      {
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_A_7"
+            ],
+            "transport" : "VESSEL:Vessel 1"
+         },
+         "ts" : 29,
+         "name" : "Port-A",
+         "cat" : "ddd",
+         "pid" : "VESSEL:Vessel 1",
+         "ph" : "B",
+         "tid" : "VESSEL:Vessel 1"
+      },
+      {
+         "tid" : "TRUCK:Truck 1",
+         "ph" : "E",
+         "pid" : "TRUCK:Truck 1",
+         "cat" : "ddd",
+         "ts" : 31,
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_B_10"
+            ],
+            "transport" : "TRUCK:Truck 1"
+         }
+      },
+      {
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 1",
+         "name" : "B-Factory",
+         "ts" : 31,
+         "args" : {
+            "transport" : "TRUCK:Truck 1",
+            "cargo" : []
+         },
+         "tid" : "TRUCK:Truck 1",
+         "ph" : "B"
+      },
+      {
+         "args" : {
+            "transport" : "VESSEL:Vessel 1",
+            "cargo" : [
+               "CARGO:Factory_A_7"
+            ]
+         },
+         "cat" : "ddd",
+         "pid" : "VESSEL:Vessel 1",
+         "ts" : 33,
+         "tid" : "VESSEL:Vessel 1",
+         "ph" : "E"
+      },
+      {
+         "ph" : "B",
+         "tid" : "VESSEL:Vessel 1",
+         "args" : {
+            "cargo" : [],
+            "transport" : "VESSEL:Vessel 1"
+         },
+         "cat" : "ddd",
+         "pid" : "VESSEL:Vessel 1",
+         "ts" : 33,
+         "name" : "A-Port"
+      },
+      {
+         "tid" : "TRUCK:Truck 2",
+         "ph" : "E",
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 2",
+         "ts" : 34,
+         "args" : {
+            "transport" : "TRUCK:Truck 2",
+            "cargo" : []
+         }
+      },
+      {
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_B_11"
+            ],
+            "transport" : "TRUCK:Truck 2"
+         },
+         "name" : "Factory-B",
+         "ts" : 34,
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 2",
+         "ph" : "B",
+         "tid" : "TRUCK:Truck 2"
+      },
+      {
+         "ph" : "E",
+         "tid" : "TRUCK:Truck 1",
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 1",
+         "ts" : 36,
+         "args" : {
+            "transport" : "TRUCK:Truck 1",
+            "cargo" : []
+         }
+      },
+      {
+         "ph" : "E",
+         "tid" : "VESSEL:Vessel 1",
+         "ts" : 37,
+         "cat" : "ddd",
+         "pid" : "VESSEL:Vessel 1",
+         "args" : {
+            "cargo" : [],
+            "transport" : "VESSEL:Vessel 1"
+         }
+      },
+      {
+         "ph" : "B",
+         "tid" : "VESSEL:Vessel 1",
+         "pid" : "VESSEL:Vessel 1",
+         "cat" : "ddd",
+         "name" : "Port-A",
+         "ts" : 37,
+         "args" : {
+            "transport" : "VESSEL:Vessel 1",
+            "cargo" : [
+               "CARGO:Factory_A_8"
+            ]
+         }
+      },
+      {
+         "tid" : "TRUCK:Truck 2",
+         "ph" : "E",
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_B_11"
+            ],
+            "transport" : "TRUCK:Truck 2"
+         },
+         "pid" : "TRUCK:Truck 2",
+         "cat" : "ddd",
+         "ts" : 39
+      },
+      {
+         "args" : {
+            "transport" : "TRUCK:Truck 2",
+            "cargo" : []
+         },
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 2",
+         "ts" : 39,
+         "name" : "B-Factory",
+         "ph" : "B",
+         "tid" : "TRUCK:Truck 2"
+      },
+      {
+         "ph" : "E",
+         "tid" : "VESSEL:Vessel 1",
+         "pid" : "VESSEL:Vessel 1",
+         "cat" : "ddd",
+         "ts" : 41,
+         "args" : {
+            "transport" : "VESSEL:Vessel 1",
+            "cargo" : [
+               "CARGO:Factory_A_8"
+            ]
+         }
+      }
+   ],
+   "displayTimeUnit" : "ms"
+}

@@ -1,0 +1,89 @@
+{"time": 0.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "ARRIVE", "location": "Factory"}
+{"time": 0.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [], "event": "ARRIVE", "location": "Factory"}
+{"time": 0.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [], "event": "ARRIVE", "location": "Port"}
+{"time": 0.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": "0", "origin": "Factory", "destination": "A"}], "event": "LOAD", "duration": 0.0}
+{"time": 0.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": "1", "origin": "Factory", "destination": "B"}], "event": "LOAD", "duration": 0.0}
+{"time": 0.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": "0", "origin": "Factory", "destination": "A"}], "event": "DEPART", "location": "Factory", "destination": "Port"}
+{"time": 0.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": "1", "origin": "Factory", "destination": "B"}], "event": "DEPART", "location": "Factory", "destination": "B"}
+{"time": 1.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": "0", "origin": "Factory", "destination": "A"}], "event": "ARRIVE", "location": "Port"}
+{"time": 1.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "UNLOAD", "duration": 0.0}
+{"time": 1.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "DEPART", "location": "Port", "destination": "Factory"}
+{"time": 1.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [{"cargo_id": "0", "origin": "Factory", "destination": "A"}], "event": "LOAD", "duration": 1.0}
+{"time": 2.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "ARRIVE", "location": "Factory"}
+{"time": 2.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [{"cargo_id": "0", "origin": "Factory", "destination": "A"}], "event": "DEPART", "location": "Port", "destination": "A"}
+{"time": 2.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": "2", "origin": "Factory", "destination": "B"}], "event": "LOAD", "duration": 0.0}
+{"time": 2.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": "2", "origin": "Factory", "destination": "B"}], "event": "DEPART", "location": "Factory", "destination": "B"}
+{"time": 5.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": "1", "origin": "Factory", "destination": "B"}], "event": "ARRIVE", "location": "B"}
+{"time": 5.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [], "event": "UNLOAD", "duration": 0.0}
+{"time": 5.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [], "event": "DEPART", "location": "B", "destination": "Factory"}
+{"time": 7.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": "2", "origin": "Factory", "destination": "B"}], "event": "ARRIVE", "location": "B"}
+{"time": 7.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "UNLOAD", "duration": 0.0}
+{"time": 7.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "DEPART", "location": "B", "destination": "Factory"}
+{"time": 8.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [{"cargo_id": "0", "origin": "Factory", "destination": "A"}], "event": "ARRIVE", "location": "A"}
+{"time": 8.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [], "event": "UNLOAD", "duration": 1.0}
+{"time": 9.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [], "event": "DEPART", "location": "A", "destination": "Port"}
+{"time": 10.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [], "event": "ARRIVE", "location": "Factory"}
+{"time": 10.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": "3", "origin": "Factory", "destination": "B"}], "event": "LOAD", "duration": 0.0}
+{"time": 10.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": "3", "origin": "Factory", "destination": "B"}], "event": "DEPART", "location": "Factory", "destination": "B"}
+{"time": 12.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "ARRIVE", "location": "Factory"}
+{"time": 12.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": "4", "origin": "Factory", "destination": "A"}], "event": "LOAD", "duration": 0.0}
+{"time": 12.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": "4", "origin": "Factory", "destination": "A"}], "event": "DEPART", "location": "Factory", "destination": "Port"}
+{"time": 13.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": "4", "origin": "Factory", "destination": "A"}], "event": "ARRIVE", "location": "Port"}
+{"time": 13.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "UNLOAD", "duration": 0.0}
+{"time": 13.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "DEPART", "location": "Port", "destination": "Factory"}
+{"time": 14.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "ARRIVE", "location": "Factory"}
+{"time": 14.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": "5", "origin": "Factory", "destination": "B"}], "event": "LOAD", "duration": 0.0}
+{"time": 14.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": "5", "origin": "Factory", "destination": "B"}], "event": "DEPART", "location": "Factory", "destination": "B"}
+{"time": 15.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [], "event": "ARRIVE", "location": "Port"}
+{"time": 15.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": "3", "origin": "Factory", "destination": "B"}], "event": "ARRIVE", "location": "B"}
+{"time": 15.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [], "event": "UNLOAD", "duration": 0.0}
+{"time": 15.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [], "event": "DEPART", "location": "B", "destination": "Factory"}
+{"time": 15.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [{"cargo_id": "4", "origin": "Factory", "destination": "A"}], "event": "LOAD", "duration": 1.0}
+{"time": 16.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [{"cargo_id": "4", "origin": "Factory", "destination": "A"}], "event": "DEPART", "location": "Port", "destination": "A"}
+{"time": 19.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": "5", "origin": "Factory", "destination": "B"}], "event": "ARRIVE", "location": "B"}
+{"time": 19.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "UNLOAD", "duration": 0.0}
+{"time": 19.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "DEPART", "location": "B", "destination": "Factory"}
+{"time": 20.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [], "event": "ARRIVE", "location": "Factory"}
+{"time": 20.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": "6", "origin": "Factory", "destination": "A"}], "event": "LOAD", "duration": 0.0}
+{"time": 20.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": "6", "origin": "Factory", "destination": "A"}], "event": "DEPART", "location": "Factory", "destination": "Port"}
+{"time": 21.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": "6", "origin": "Factory", "destination": "A"}], "event": "ARRIVE", "location": "Port"}
+{"time": 21.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [], "event": "UNLOAD", "duration": 0.0}
+{"time": 21.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [], "event": "DEPART", "location": "Port", "destination": "Factory"}
+{"time": 22.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [{"cargo_id": "4", "origin": "Factory", "destination": "A"}], "event": "ARRIVE", "location": "A"}
+{"time": 22.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [], "event": "ARRIVE", "location": "Factory"}
+{"time": 22.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": "7", "origin": "Factory", "destination": "A"}], "event": "LOAD", "duration": 0.0}
+{"time": 22.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": "7", "origin": "Factory", "destination": "A"}], "event": "DEPART", "location": "Factory", "destination": "Port"}
+{"time": 22.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [], "event": "UNLOAD", "duration": 1.0}
+{"time": 23.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": "7", "origin": "Factory", "destination": "A"}], "event": "ARRIVE", "location": "Port"}
+{"time": 23.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [], "event": "DEPART", "location": "A", "destination": "Port"}
+{"time": 23.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [], "event": "UNLOAD", "duration": 0.0}
+{"time": 23.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [], "event": "DEPART", "location": "Port", "destination": "Factory"}
+{"time": 24.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "ARRIVE", "location": "Factory"}
+{"time": 24.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [], "event": "ARRIVE", "location": "Factory"}
+{"time": 24.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": "8", "origin": "Factory", "destination": "A"}], "event": "LOAD", "duration": 0.0}
+{"time": 24.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": "9", "origin": "Factory", "destination": "B"}], "event": "LOAD", "duration": 0.0}
+{"time": 24.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": "8", "origin": "Factory", "destination": "A"}], "event": "DEPART", "location": "Factory", "destination": "Port"}
+{"time": 24.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": "9", "origin": "Factory", "destination": "B"}], "event": "DEPART", "location": "Factory", "destination": "B"}
+{"time": 25.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": "8", "origin": "Factory", "destination": "A"}], "event": "ARRIVE", "location": "Port"}
+{"time": 25.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "UNLOAD", "duration": 0.0}
+{"time": 25.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "DEPART", "location": "Port", "destination": "Factory"}
+{"time": 26.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "ARRIVE", "location": "Factory"}
+{"time": 26.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": "10", "origin": "Factory", "destination": "B"}], "event": "LOAD", "duration": 0.0}
+{"time": 26.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": "10", "origin": "Factory", "destination": "B"}], "event": "DEPART", "location": "Factory", "destination": "B"}
+{"time": 29.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [], "event": "ARRIVE", "location": "Port"}
+{"time": 29.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": "9", "origin": "Factory", "destination": "B"}], "event": "ARRIVE", "location": "B"}
+{"time": 29.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [], "event": "UNLOAD", "duration": 0.0}
+{"time": 29.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [], "event": "DEPART", "location": "B", "destination": "Factory"}
+{"time": 29.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [{"cargo_id": "6", "origin": "Factory", "destination": "A"}, {"cargo_id": "7", "origin": "Factory", "destination": "A"}, {"cargo_id": "8", "origin": "Factory", "destination": "A"}], "event": "LOAD", "duration": 1.0}
+{"time": 30.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [{"cargo_id": "6", "origin": "Factory", "destination": "A"}, {"cargo_id": "7", "origin": "Factory", "destination": "A"}, {"cargo_id": "8", "origin": "Factory", "destination": "A"}], "event": "DEPART", "location": "Port", "destination": "A"}
+{"time": 31.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": "10", "origin": "Factory", "destination": "B"}], "event": "ARRIVE", "location": "B"}
+{"time": 31.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "UNLOAD", "duration": 0.0}
+{"time": 31.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "DEPART", "location": "B", "destination": "Factory"}
+{"time": 34.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [], "event": "ARRIVE", "location": "Factory"}
+{"time": 34.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": "11", "origin": "Factory", "destination": "B"}], "event": "LOAD", "duration": 0.0}
+{"time": 34.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": "11", "origin": "Factory", "destination": "B"}], "event": "DEPART", "location": "Factory", "destination": "B"}
+{"time": 36.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [{"cargo_id": "6", "origin": "Factory", "destination": "A"}, {"cargo_id": "7", "origin": "Factory", "destination": "A"}, {"cargo_id": "8", "origin": "Factory", "destination": "A"}], "event": "ARRIVE", "location": "A"}
+{"time": 36.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [], "event": "ARRIVE", "location": "Factory"}
+{"time": 36.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [], "event": "UNLOAD", "duration": 1.0}
+{"time": 37.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [], "event": "DEPART", "location": "A", "destination": "Port"}
+{"time": 39.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": "11", "origin": "Factory", "destination": "B"}], "event": "ARRIVE", "location": "B"}

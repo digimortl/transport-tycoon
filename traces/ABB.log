@@ -1,0 +1,15 @@
+{"time": 0.0, "transport_id": "Truck 1", "kind": "TRUCK", "event": "ARRIVE", "location": "Factory"}
+{"time": 0.0, "transport_id": "Truck 2", "kind": "TRUCK", "event": "ARRIVE", "location": "Factory"}
+{"time": 0.0, "transport_id": "Vessel 1", "kind": "VESSEL", "event": "ARRIVE", "location": "Port"}
+{"time": 0.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": 0, "origin": "Factory", "destination": "A"}], "event": "DEPART", "location": "Factory", "destination": "Port"}
+{"time": 0.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": 1, "origin": "Factory", "destination": "B"}], "event": "DEPART", "location": "Factory", "destination": "B"}
+{"time": 1.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": 0, "origin": "Factory", "destination": "A"}], "event": "ARRIVE", "location": "Port"}
+{"time": 1.0, "transport_id": "Truck 1", "kind": "TRUCK", "event": "DEPART", "location": "Port", "destination": "Factory"}
+{"time": 1.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [{"cargo_id": 0, "origin": "Factory", "destination": "A"}], "event": "DEPART", "location": "Port", "destination": "A"}
+{"time": 2.0, "transport_id": "Truck 1", "kind": "TRUCK", "event": "ARRIVE", "location": "Factory"}
+{"time": 2.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": 2, "origin": "Factory", "destination": "B"}], "event": "DEPART", "location": "Factory", "destination": "B"}
+{"time": 5.0, "transport_id": "Truck 2", "kind": "TRUCK", "cargo": [{"cargo_id": 1, "origin": "Factory", "destination": "B"}], "event": "ARRIVE", "location": "B"}
+{"time": 5.0, "transport_id": "Vessel 1", "kind": "VESSEL", "cargo": [{"cargo_id": 0, "origin": "Factory", "destination": "A"}], "event": "ARRIVE", "location": "A"}
+{"time": 5.0, "transport_id": "Truck 2", "kind": "TRUCK", "event": "DEPART", "location": "B", "destination": "Factory"}
+{"time": 5.0, "transport_id": "Vessel 1", "kind": "VESSEL", "event": "DEPART", "location": "A", "destination": "Port"}
+{"time": 7.0, "transport_id": "Truck 1", "kind": "TRUCK", "cargo": [{"cargo_id": 2, "origin": "Factory", "destination": "B"}], "event": "ARRIVE", "location": "B"}

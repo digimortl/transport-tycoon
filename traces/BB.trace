@@ -1,0 +1,92 @@
+{
+   "displayTimeUnit" : "ms",
+   "traceEvents" : [
+      {
+         "tid" : "TRUCK:Truck 1",
+         "args" : {
+            "cargo" : [],
+            "transport" : "TRUCK:Truck 1"
+         },
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 1",
+         "ts" : 0,
+         "ph" : "E"
+      },
+      {
+         "tid" : "TRUCK:Truck 2",
+         "args" : {
+            "transport" : "TRUCK:Truck 2",
+            "cargo" : []
+         },
+         "pid" : "TRUCK:Truck 2",
+         "cat" : "ddd",
+         "ts" : 0,
+         "ph" : "E"
+      },
+      {
+         "args" : {
+            "transport" : "VESSEL:Vessel 1",
+            "cargo" : []
+         },
+         "pid" : "VESSEL:Vessel 1",
+         "cat" : "ddd",
+         "tid" : "VESSEL:Vessel 1",
+         "ph" : "E",
+         "ts" : 0
+      },
+      {
+         "ph" : "B",
+         "name" : "Factory-B",
+         "ts" : 0,
+         "tid" : "TRUCK:Truck 1",
+         "pid" : "TRUCK:Truck 1",
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_B_0"
+            ],
+            "transport" : "TRUCK:Truck 1"
+         },
+         "cat" : "ddd"
+      },
+      {
+         "ts" : 0,
+         "name" : "Factory-B",
+         "ph" : "B",
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_B_1"
+            ],
+            "transport" : "TRUCK:Truck 2"
+         },
+         "pid" : "TRUCK:Truck 2",
+         "cat" : "ddd",
+         "tid" : "TRUCK:Truck 2"
+      },
+      {
+         "ts" : 5,
+         "ph" : "E",
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_B_0"
+            ],
+            "transport" : "TRUCK:Truck 1"
+         },
+         "cat" : "ddd",
+         "pid" : "TRUCK:Truck 1",
+         "tid" : "TRUCK:Truck 1"
+      },
+      {
+         "cat" : "ddd",
+         "args" : {
+            "cargo" : [
+               "CARGO:Factory_B_1"
+            ],
+            "transport" : "TRUCK:Truck 2"
+         },
+         "pid" : "TRUCK:Truck 2",
+         "tid" : "TRUCK:Truck 2",
+         "ts" : 5,
+         "ph" : "E"
+      }
+   ]
+}
