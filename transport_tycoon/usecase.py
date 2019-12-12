@@ -6,7 +6,7 @@ from logging.config import dictConfig
 from typing import Sequence
 
 from transport_tycoon import config
-from transport_tycoon.dom import Cargo, LocationCode, Navigator, Truck, Vessel, Warehouse
+from transport_tycoon.dom import Cargo, LocationCode, TransportMap, Truck, Vessel, Warehouse
 from transport_tycoon.common.simulator import Event, Simulator
 from transport_tycoon.common.util import hours, Time
 
@@ -35,43 +35,40 @@ def forEach(func, iterable):
 
 
 async def useCase(*destinationCodes: LocationCode) -> Sequence[Event]:
-    FACTORY = 'Factory'
-    PORT = 'Port'
-    A, B = 'A', 'B'
+    startAt = Time.today().replace(hour=0, minute=0, second=0, microsecond=0)
+    simulator = Simulator(startAt, ensure_future)
 
-    checkIfLocationCodesValid([A, B], destinationCodes)
+    factory = Warehouse(simulator, 'Factory')
+    port = Warehouse(simulator, 'Port')
+    warehouseA = Warehouse(simulator, 'A')
+    warehouseB = Warehouse(simulator, 'B')
+
+    checkIfLocationCodesValid([warehouseA.locationCode,
+                               warehouseB.locationCode], destinationCodes)
 
     def cargoFromFactoryTo(pair) -> Cargo:
-        return Cargo(pair[0], FACTORY, pair[1])
+        return Cargo(str(pair[0]), factory.locationCode, pair[1])
 
     cargoesToDeliver = list(map(cargoFromFactoryTo, enumerate(destinationCodes)))
 
-    startAt = Time.today().replace(hour=0, minute=0, second=0, microsecond=0)
-    LOG.debug('Start simulation at %s', startAt.time())
-
-    simulator = Simulator(startAt, ensure_future)
-
-    factory = Warehouse(simulator, FACTORY)
     forEach(factory.bring, cargoesToDeliver)
-    port = Warehouse(simulator, PORT)
-    warehouseA = Warehouse(simulator, A)
-    warehouseB = Warehouse(simulator, B)
-
-    navigator = \
-        Navigator() \
+    transportMap = \
+        TransportMap() \
             .byLand(factory, port, hours(1)) \
                 .bySea(port, warehouseA, hours(6)) \
             .byLand(factory, warehouseB, hours(5))
 
-    await Truck(simulator, 'Truck 1', navigator) \
+    await Truck(simulator, 'Truck 1', transportMap) \
         .startJourneyFrom(factory)
-    await Truck(simulator, 'Truck 2', navigator) \
+    await Truck(simulator, 'Truck 2', transportMap) \
         .startJourneyFrom(factory)
-    await Vessel(simulator, 'Vessel 1', navigator) \
+    await Vessel(simulator, 'Vessel 1', transportMap) \
         .startJourneyFrom(port)
 
     def tillCargoesHaveBeenDelivered() -> bool:
         return len(cargoesToDeliver) == warehouseA.fullness() + warehouseB.fullness()
+
+    LOG.debug('Start simulation at %s', startAt.time())
 
     occurredEvents = await simulator.proceed(tillCargoesHaveBeenDelivered)
 

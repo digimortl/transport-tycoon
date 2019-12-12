@@ -16,7 +16,7 @@ def eventToDict(event: Event, startAt: Time):
     if event.cargoes:
         rv.update({
             'cargo': [{
-                'cargo_id': cargo.id,
+                'cargo_id': cargo.trackNumber,
                 'origin': cargo.originCode,
                 'destination': cargo.destinationCode,
             } for cargo in event.cargoes]

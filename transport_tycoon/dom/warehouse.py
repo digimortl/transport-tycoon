@@ -4,11 +4,14 @@ from typing import List, NamedTuple as Object, Optional
 from transport_tycoon.common.simulator import Simulator, SimulationObject
 
 
+__all__ = ('Cargo', 'LocationCode', 'Warehouse')
+
+
 LocationCode = str
 
 
 class Cargo(Object):
-    id: int
+    trackNumber: str
     originCode: LocationCode
     destinationCode: LocationCode
 

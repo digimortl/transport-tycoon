@@ -1,48 +1,35 @@
 from logging import getLogger
-from typing import List, Optional, overload, Sequence
+from typing import List, Optional, overload
 
-from transport_tycoon.common.simulator import Event, Simulator, SimulationObject
-from transport_tycoon.common.util import Duration, hours, Time
-from transport_tycoon.dom.navigator import Itinerary, ShipmentOption, Navigator
+from transport_tycoon.common.simulator import Simulator, SimulationObject
+from transport_tycoon.common.util import Duration, hours
+from transport_tycoon.dom.map import Itinerary, ShipmentOption, TransportMap
 from transport_tycoon.dom.warehouse import Cargo, LocationCode, Warehouse
+from .events import *
+
+
+__all__ = ('Transport', 'Truck', 'Vessel')
 
 
 LOG = getLogger(__name__)
 
 
-class TransportArrived(Event):
-    source: object
-    atWarehouse: Warehouse
-    cargoes: Sequence[Cargo] = ()
-    occurredAt: Time = None
-
-
-class TransportDeparted(Event):
-    source: object
-    fromWarehouse: Warehouse
-    toWarehouse: Warehouse
-    cargoes: Sequence[Cargo]
-    occurredAt: Time = None
-
-
 class Transport(SimulationObject):
+    capacity: int = 1
+    departAfter: Duration = hours(0)
 
     def __init__(self,
                  sim: Simulator,
                  name: str,
-                 nav: Navigator,
-                 shipmentOption: ShipmentOption,
-                 maxCargoes: int = 1,
-                 departAfter: Duration = Duration()
+                 transportMap: TransportMap,
+                 shipmentOption: ShipmentOption
                  ):
         super().__init__(sim)
         self.__name = name
         self.__cargoes: List[Cargo] = []
         self.__assignedItinerary: Optional[Itinerary] = None
-        self.__nav = nav
+        self.__transportMap = transportMap
         self.__shipmentOption = shipmentOption
-        self.__maxCargoes = maxCargoes
-        self.__departAfter = departAfter
 
     @property
     def name(self) -> str:
@@ -55,7 +42,7 @@ class Transport(SimulationObject):
         return self.__cargoes.pop()
 
     def assignItinerary(self, from_: LocationCode, to: LocationCode):
-        itinerary = self.__nav.findItinerary(from_, to)
+        itinerary = self.__transportMap.findItinerary(from_, to)
         self.__assignedItinerary = itinerary.forShipBy(self.__shipmentOption)
         LOG.debug('%r assigned itinerary %r', self, self.__assignedItinerary)
 
@@ -67,7 +54,7 @@ class Transport(SimulationObject):
         return not self.__cargoes
 
     def isFull(self) -> bool:
-        return len(self.__cargoes) == self.__maxCargoes
+        return len(self.__cargoes) == self.capacity
 
     async def startJourneyFrom(self, warehouse: Warehouse):
         await self._sim.schedule(TransportArrived(self, atWarehouse=warehouse))
@@ -76,8 +63,9 @@ class Transport(SimulationObject):
         transportDeparted = TransportDeparted(self,
                                               fromWarehouse=self.__assignedItinerary.origin,
                                               toWarehouse=self.__assignedItinerary.destination,
+                                              timeToDeliver=self.__assignedItinerary.totalTimeToTravel,
                                               cargoes=tuple(self.__cargoes))
-        await self._sim.schedule(transportDeparted, after=self.__departAfter)
+        await self._sim.schedule(transportDeparted, after=self.departAfter)
 
     async def comeBack(self):
         self.reAssignItineraryToComeBack()
@@ -100,18 +88,14 @@ class Transport(SimulationObject):
             raise NotImplementedError
 
     async def loadCargoesFrom(self, warehouse: Warehouse):
-        while True:
+        while not self.isFull():
             aCargo = warehouse.pickCargo()
-            if aCargo:
+            if aCargo is not None:
                 self.load(aCargo)
-
-                if self.isFull():
-                    break
-            else:
-                if not self.isEmpty():
-                    break
-
+            elif self.isEmpty():
                 await warehouse.waitForACargo()
+            else:
+                break
 
     def unloadCargoesTo(self, warehouse: Warehouse):
         while not self.isEmpty():
@@ -133,19 +117,22 @@ class Transport(SimulationObject):
 
     async def whenDeparted(self, departed: TransportDeparted):
         transportArrived = TransportArrived(self,
-                                            atWarehouse=self.__assignedItinerary.destination,
+                                            atWarehouse=departed.toWarehouse,
                                             cargoes=tuple(self.__cargoes))
-        await self._sim.schedule(transportArrived, after=self.__assignedItinerary.totalTimeToTravel)
+        await self._sim.schedule(transportArrived, after=departed.timeToDeliver)
 
     def __repr__(self):
         return f'{type(self).__name__}({self.__name})'
 
 
 class Truck(Transport):
-    def __init__(self, sim: Simulator, name: str, nav: Navigator):
-        super().__init__(sim, name, nav, ShipmentOption.land)
+    def __init__(self, sim: Simulator, name: str, transportMap: TransportMap):
+        super().__init__(sim, name, transportMap, ShipmentOption.land)
 
 
 class Vessel(Transport):
-    def __init__(self, sim: Simulator, name: str, nav: Navigator):
-        super().__init__(sim, name, nav, ShipmentOption.sea, maxCargoes=6, departAfter=hours(1))
+    capacity: int = 4
+    departAfter: Duration = hours(1)
+
+    def __init__(self, sim: Simulator, name: str, transportMap: TransportMap):
+        super().__init__(sim, name, transportMap, ShipmentOption.sea)
