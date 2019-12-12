@@ -1,0 +1,27 @@
+from asyncio import run
+from typing import Coroutine
+from unittest import TestCase
+
+from transport_tycoon.common.util import Duration, hours
+from transport_tycoon.usecase import useCase
+
+
+class UseCaseTest(TestCase):
+    def _run(self, useCaseCoro: Coroutine) -> Duration:
+        return run(useCaseCoro)
+
+    def testThatDeliveryToATakes5Hours(self):
+        timeToDeliver = self._run(useCase('A'))
+        self.assertEqual(timeToDeliver, hours(5))
+
+    def testThatDeliveryToABTakes5Hours(self):
+        timeToDeliver = self._run(useCase('A', 'B'))
+        self.assertEqual(timeToDeliver, hours(5))
+
+    def testThatDeliveryToBBTakes5Hours(self):
+        timeToDeliver = self._run(useCase('B', 'B'))
+        self.assertEqual(timeToDeliver, hours(5))
+
+    def testThatDeliveryToABBTakes7Hours(self):
+        timeToDeliver = self._run(useCase('A','B', 'B'))
+        self.assertEqual(timeToDeliver, hours(7))
