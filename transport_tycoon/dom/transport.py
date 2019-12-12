@@ -1,87 +1,115 @@
 from logging import getLogger
-from typing import overload
+from typing import Optional, overload
 
-from transport_tycoon.dom import Navigator
 from transport_tycoon.common.simulator import Event, Simulator, SimulationObject
-from transport_tycoon.dom.warehouse import Cargo, Warehouse
+from transport_tycoon.common.util import Time
+from transport_tycoon.dom.navigator import Itinerary, ShipmentOption, Navigator
+from transport_tycoon.dom.warehouse import Cargo, LocationCode, Warehouse
 
 
 LOG = getLogger(__name__)
 
 
-class CameToOrigin(Event):
+class TransportArrived(Event):
     source: object
-    toLocation: Warehouse
+    atWarehouse: Warehouse
+    cargo: Optional[Cargo] = None
+    occurredAt: Time = None
 
 
-class CameToDestination(Event):
+class TransportDeparted(Event):
     source: object
-    fromLocation: Warehouse
-    toLocation: Warehouse
+    fromWarehouse: Warehouse
+    toWarehouse: Warehouse
     cargo: Cargo
+    occurredAt: Time = None
 
 
 class Transport(SimulationObject):
-    name: str
 
-    def __init__(self, sim: Simulator, name: str, nav: Navigator):
+    def __init__(self, sim: Simulator, name: str, nav: Navigator, shipmentOption: ShipmentOption):
         super().__init__(sim)
-        self.name = name
-        self._nav = nav
+        self.__name = name
+        self.__cargo: Optional[Cargo] = None
+        self.__assignedItinerary: Optional[Itinerary] = None
+        self.__nav = nav
+        self.__shipmentOption = shipmentOption
 
-    async def arriveAt(self, location: Warehouse):
-        await self._sim.schedule(CameToOrigin(self, toLocation=location))
+    def load(self, aCargo: Cargo):
+        self.__cargo = aCargo
 
-    async def comeBackTo(self, location: Warehouse, fromLocation: Warehouse):
-        destination, timeToTravel = self._nav.findNextLocation(fromLocation.locationCode,
-                                                               location.locationCode)
-        LOG.debug('%r will come back to %s in %s hour(s)', self, destination.locationCode, timeToTravel)
+    def unloadACargo(self) -> Cargo:
+        cargo, self.__cargo = self.__cargo, None
+        return cargo
 
-        cameBack = CameToOrigin(self,
-                                toLocation=destination)
-        await self._sim.schedule(cameBack, after=timeToTravel)
+    def assignItinerary(self, from_: LocationCode, to: LocationCode):
+        itinerary = self.__nav.findItinerary(from_, to)
+        self.__assignedItinerary = itinerary.forShipBy(self.__shipmentOption)
+        LOG.debug('%r assigned itinerary %r', self, self.__assignedItinerary)
+
+    def reAssignItineraryToComeBack(self):
+        self.__assignedItinerary = self.__assignedItinerary.forComeBack()
+        LOG.debug('%r (re)assigned itinerary %r', self, self.__assignedItinerary)
+
+    def hasNotCargo(self) -> bool:
+        return self.__cargo is None
+
+    async def startJourneyFrom(self, warehouse: Warehouse):
+        await self._sim.schedule(TransportArrived(self, atWarehouse=warehouse))
+
+    async def depart(self):
+        transportDeparted = TransportDeparted(self,
+                                              fromWarehouse=self.__assignedItinerary.origin,
+                                              toWarehouse=self.__assignedItinerary.destination,
+                                              cargo=self.__cargo)
+        await self._sim.schedule(transportDeparted)
+
+    async def comeBack(self):
+        self.reAssignItineraryToComeBack()
+        await self.depart()
 
     @overload
-    async def when(self, came: CameToOrigin):
+    async def when(self, arrived: TransportArrived):
         ...
 
     @overload
-    async def when(self, came: CameToDestination):
+    async def when(self, departed: TransportDeparted):
         ...
 
     async def when(self, event):
-        if isinstance(event, CameToOrigin):
-            await self.whenCameToOrigin(event)
-        elif isinstance(event, CameToDestination):
-            await self.whenCameToDestination(event)
+        if isinstance(event, TransportArrived):
+            await self.whenArrived(event)
+        elif isinstance(event, TransportDeparted):
+            await self.whenDeparted(event)
         else:
             raise NotImplementedError
 
-    async def whenCameToOrigin(self, came: CameToOrigin):
-        currentLocation = came.toLocation
-        LOG.info('%r came to %s', self, currentLocation.locationCode)
+    async def whenArrived(self, arrived: TransportArrived):
+        if self.hasNotCargo():
+            aCargo = await arrived.atWarehouse.pickCargo()
+            self.load(aCargo)
+            self.assignItinerary(from_=arrived.atWarehouse.locationCode, to=aCargo.destinationCode)
+            await self.depart()
+        else:
+            aCargo = self.unloadACargo()
+            arrived.atWarehouse.bring(aCargo)
+            await self.comeBack()
 
-        cargo = await currentLocation.pickCargo()
-        LOG.info('%r picked up a cargo %r from %s', self, cargo, currentLocation.locationCode)
-
-        destination, timeToTravel = self._nav.findNextLocation(currentLocation.locationCode,
-                                                               cargo.destinationCode)
-        LOG.debug('%r will deliver a cargo %r to %s in %s hour(s)',
-                  self, cargo, destination.locationCode, timeToTravel)
-        cameToDest = CameToDestination(self,
-                                       fromLocation=currentLocation,
-                                       toLocation=destination,
-                                       cargo=cargo)
-        await self._sim.schedule(cameToDest, after=timeToTravel)
-
-    async def whenCameToDestination(self, came: CameToDestination):
-        currentLocation = came.toLocation
-        LOG.info('%r came to to %s', self, currentLocation.locationCode)
-
-        currentLocation.bring(came.cargo)
-        LOG.info('%r brought the cargo %r to %s', self, came.cargo, currentLocation.locationCode)
-
-        await self.comeBackTo(came.fromLocation, currentLocation)
+    async def whenDeparted(self, departed: TransportDeparted):
+        transportArrived = TransportArrived(self,
+                                            atWarehouse=self.__assignedItinerary.destination,
+                                            cargo=self.__cargo)
+        await self._sim.schedule(transportArrived, after=self.__assignedItinerary.totalTimeToTravel)
 
     def __repr__(self):
-        return f'{type(self).__name__}({self.name})'
+        return f'{type(self).__name__}({self.__name})'
+
+
+class Truck(Transport):
+    def __init__(self, sim: Simulator, name: str, nav: Navigator):
+        super().__init__(sim, name, nav, ShipmentOption.land)
+
+
+class Vessel(Transport):
+    def __init__(self, sim: Simulator, name: str, nav: Navigator):
+        super().__init__(sim, name, nav, ShipmentOption.sea)

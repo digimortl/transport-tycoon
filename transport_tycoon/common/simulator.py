@@ -1,7 +1,7 @@
 from asyncio import sleep
 from asyncio.queues import PriorityQueue
 from logging import getLogger
-from typing import Callable, Coroutine, NamedTuple as Event
+from typing import Callable, Coroutine, NamedTuple as Event, Sequence
 
 from transport_tycoon.common.util import Duration, Time
 
@@ -27,9 +27,8 @@ class Simulator:
         return self.__eventSeq
 
     async def schedule(self, anEvent: Event, after: Duration = Duration()):
-        willOccurrAt = self.currentTime + after
-        LOG.debug('%r will occur at %s', anEvent, willOccurrAt.time())
-        await self.__eventsQueue.put((willOccurrAt, self.nextEventSeq(), anEvent))
+        willOccurAt = self.currentTime + after
+        await self.__eventsQueue.put((willOccurAt, self.nextEventSeq(), anEvent._replace(occurredAt=willOccurAt)))
 
     def suspendProcess(self):
         self.__processesReadyToGo -= 1
@@ -49,10 +48,12 @@ class Simulator:
         self.resumeProcess()
         return self.__spawn(fork())
 
-    async def proceed(self, till: Pred):
+    async def proceed(self, till: Pred) -> Sequence[Event]:
 
         async def switch():
             await sleep(0)
+
+        occurredEvents = []
 
         while True:
 
@@ -64,9 +65,12 @@ class Simulator:
 
             currentTime, _, anEvent = await self.__eventsQueue.get()
             self.currentTime = currentTime
-            LOG.info('At %s an event %r occurred', self.currentTime.time(), anEvent)
+            LOG.info('At %s an event %r occurred', anEvent.occurredAt.time(), anEvent)
 
             self.newProcessFor(anEvent.source.when(anEvent))
+            occurredEvents.append(anEvent)
+
+        return occurredEvents
 
 
 class SimulationObject:

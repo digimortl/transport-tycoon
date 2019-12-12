@@ -6,9 +6,9 @@ from logging.config import dictConfig
 from typing import Sequence
 
 from transport_tycoon import config
-from transport_tycoon.dom import Cargo, LocationCode, Navigator, Transport, Warehouse
-from transport_tycoon.common.simulator import Simulator
-from transport_tycoon.common.util import Duration, hours, Time
+from transport_tycoon.dom import Cargo, LocationCode, Navigator, Truck, Vessel, Warehouse
+from transport_tycoon.common.simulator import Event, Simulator
+from transport_tycoon.common.util import hours, Time
 
 
 LOG = getLogger(__name__)
@@ -34,14 +34,14 @@ def forEach(func, iterable):
         func(it)
 
 
-async def useCase(*destinationCodes: LocationCode) -> Duration:
+async def useCase(*destinationCodes: LocationCode) -> Sequence[Event]:
     A, B = 'A', 'B'
 
     checkIfLocationCodesValid([A, B], destinationCodes)
 
     cargoFromFactoryTo = partial(Cargo, 'Factory')
 
-    cargosToDeliver = list(map(cargoFromFactoryTo, destinationCodes))
+    cargoesToDeliver = list(map(cargoFromFactoryTo, destinationCodes))
 
     startAt = Time.today().replace(hour=0, minute=0, second=0, microsecond=0)
     LOG.debug('Start simulation at %s', startAt.time())
@@ -49,39 +49,43 @@ async def useCase(*destinationCodes: LocationCode) -> Duration:
     simulator = Simulator(startAt, ensure_future)
 
     factory = Warehouse(simulator, 'Factory')
-    forEach(factory.bring, cargosToDeliver)
+    forEach(factory.bring, cargoesToDeliver)
     port = Warehouse(simulator, 'Port')
     warehouseA = Warehouse(simulator, A)
     warehouseB = Warehouse(simulator, B)
 
     navigator = \
         Navigator() \
-            .link(factory, port, hours(1)) \
-            .link(port, warehouseA, hours(4)) \
-            .link(factory, warehouseB, hours(5))
+            .byLand(factory, port, hours(1)) \
+                .bySea(port, warehouseA, hours(4)) \
+            .byLand(factory, warehouseB, hours(5))
 
-    await Transport(simulator, 'Truck 1', navigator) \
-        .arriveAt(factory)
-    await Transport(simulator, 'Truck 2', navigator) \
-        .arriveAt(factory)
-    await Transport(simulator, 'Vessel', navigator) \
-        .arriveAt(port)
+    await Truck(simulator, 'Truck 1', navigator) \
+        .startJourneyFrom(factory)
+    await Truck(simulator, 'Truck 2', navigator) \
+        .startJourneyFrom(factory)
+    await Vessel(simulator, 'Vessel 1', navigator) \
+        .startJourneyFrom(port)
 
-    def tillCargosHaveBeenDelivered() -> bool:
-        return len(cargosToDeliver) == warehouseA.fullness() + warehouseB.fullness()
+    def tillCargoesHaveBeenDelivered() -> bool:
+        return len(cargoesToDeliver) == warehouseA.fullness() + warehouseB.fullness()
 
-    await simulator.proceed(tillCargosHaveBeenDelivered)
+    occurredEvents = await simulator.proceed(tillCargoesHaveBeenDelivered)
 
     LOG.debug('Stop simulation at %s', simulator.currentTime.time())
-    return simulator.currentTime - startAt
+    return occurredEvents
 
 
 if __name__ == '__main__':
+    import pprint
     import sys
 
     dictConfig(config.LOGGING_CONFIG)
 
-    timeToDeliver: Duration = \
-        run(useCase(*inputLocationCodes()))
+    occurredEvents: Sequence[Event] = \
+        run(useCase(*inputLocationCodes()), debug=True)
+    pprint.pprint(occurredEvents)
 
-    print(timeToDeliver.total_seconds() / 3600.0, file=sys.stdout)
+    if occurredEvents:
+        timeToDeliver = occurredEvents[-1].occurredAt - occurredEvents[0].occurredAt
+        print(timeToDeliver.total_seconds() / 3600.0, file=sys.stdout)
