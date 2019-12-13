@@ -89,10 +89,6 @@ class Transport(SimulationObject):
         await self._sim.schedule(cargoesLoaded, after=self.timeToLoad)
 
     async def unloadCargoesTo(self, warehouse: Warehouse):
-        while not self.isEmpty():
-            aCargo = self.unload()
-            warehouse.bring(aCargo)
-
         cargoesUnloaded = CargoesUnloaded(self,
                                           toWarehouse=warehouse,
                                           duration=self.timeToUnload,
@@ -151,6 +147,10 @@ class Transport(SimulationObject):
         await self.depart()
 
     async def whenUnloaded(self, unloaded: CargoesUnloaded):
+        while not self.isEmpty():
+            aCargo = self.unload()
+            unloaded.toWarehouse.bring(aCargo)
+
         await self.comeBack()
 
 
