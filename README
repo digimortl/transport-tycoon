@@ -1,3 +1,9 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Very entangled implemetaion, do not ever look at that, nothing interesting. It's kept just for history
+!!! of the quest completeion. Beeter to keep thing simple, so see https://github.com/digimortl/tycoon it is
+!!! more simplified version of the event-driven simulator.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 Transport Tycoon Exercises for DDD solution (https://github.com/Softwarepark/exercises/blob/master/transport-tycoon.md)
 
 The idea to make use of this approach was brought from Smalltalk "Bluebook"
